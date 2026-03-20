@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Soft Life System — The Digital Planner for High-Standard Women</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,700;1,400;1,500&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --rose:#D4708A;
+  --rose-light:#E8A0B4;
+  --rose-pale:#F5C6D4;
+  --blush:#FDE8EF;
+  --blush-deep:#FAD4E0;
+  --cream:#FFF8FA;
+  --petal:#FFE4EC;
+  --mauve:#B06080;
+  --text:#3D1E28;
+  --text-soft:#7A4A58;
+  --text-muted:#B08090;
+  --white:#FFFFFF;
+  --serif:'Playfair Display',Georgia,serif;
+  --sans:'Nunito',sans-serif;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--cream);color:var(--text);font-family:var(--sans);overflow-x:hidden;padding-bottom:120px;}
+body::after{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");opacity:0.018;pointer-events:none;z-index:9999;}
+
+/* FLASH BANNER */
+.flash-banner{position:fixed;top:0;left:0;right:0;z-index:300;background:linear-gradient(135deg,var(--rose),var(--mauve));padding:0.55rem 1.5rem;display:flex;align-items:center;justify-content:center;gap:1rem;flex-wrap:wrap;}
+.flash-icon{font-size:0.9rem;}
+.flash-text{font-size:0.78rem;font-weight:700;color:var(--white);letter-spacing:0.04em;white-space:nowrap;}
+.flash-timer{display:flex;align-items:center;gap:0.3rem;}
+.timer-block{display:flex;flex-direction:column;align-items:center;background:rgba(255,255,255,0.2);border-radius:6px;padding:0.15rem 0.5rem;min-width:36px;}
+.timer-block span{font-family:var(--serif);font-size:1rem;font-weight:700;color:var(--white);line-height:1.1;}
+.timer-block label{font-size:0.55rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.75);}
+.timer-sep{font-size:1rem;font-weight:700;color:rgba(255,255,255,0.7);margin-bottom:6px;}
+.flash-cta{font-family:var(--sans);font-size:0.74rem;font-weight:700;letter-spacing:0.08em;color:var(--rose);background:var(--white);padding:0.35rem 0.9rem;border-radius:50px;text-decoration:none;transition:transform 0.2s;white-space:nowrap;animation:flashBtnGlow 2.5s ease-in-out infinite;}
+.flash-cta:hover{transform:scale(1.04);}
+@keyframes flashBtnGlow{0%,100%{box-shadow:0 2px 8px rgba(255,255,255,0.3);}50%{box-shadow:0 4px 18px rgba(255,255,255,0.7);}}
+
+/* PRICING URGENCY */
+.pricing-urgency{display:flex;align-items:center;justify-content:center;gap:0.8rem;background:var(--petal);border:1.5px solid var(--rose-pale);border-radius:12px;padding:0.7rem 1rem;margin-bottom:1.2rem;flex-wrap:wrap;}
+.pu-label{font-size:0.8rem;font-weight:700;color:var(--rose);}
+.pu-timer{display:flex;align-items:center;gap:0.3rem;}
+.pu-block{display:flex;flex-direction:column;align-items:center;background:var(--rose);border-radius:6px;padding:0.2rem 0.55rem;min-width:38px;}
+.pu-block span{font-family:var(--serif);font-size:1.05rem;font-weight:700;color:var(--white);line-height:1.1;}
+.pu-block label{font-size:0.55rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.8);}
+.pu-sep{font-size:1rem;font-weight:700;color:var(--rose);margin-bottom:6px;}
+
+/* NAV */
+nav{position:fixed;top:38px;left:0;right:0;z-index:200;padding:1.1rem 2.5rem;display:flex;justify-content:space-between;align-items:center;background:rgba(255,248,250,0.92);backdrop-filter:blur(14px);border-bottom:1px solid rgba(212,112,138,0.12);}
+.nav-logo{font-family:var(--serif);font-size:1.05rem;color:var(--rose);letter-spacing:0.04em;}
+.nav-btn{font-family:var(--sans);font-size:0.74rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;color:var(--white);background:linear-gradient(135deg,var(--rose),var(--mauve));padding:0.62rem 1.4rem;border-radius:50px;transition:transform 0.2s,box-shadow 0.2s;box-shadow:0 4px 16px rgba(212,112,138,0.3);animation:btnGlow 2.5s ease-in-out infinite;}
+.nav-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(212,112,138,0.45);}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:9.5rem 2.5rem 5rem;position:relative;overflow:hidden;}
+.blob{position:absolute;border-radius:50%;filter:blur(65px);pointer-events:none;}
+.blob-1{width:520px;height:520px;background:radial-gradient(circle,rgba(232,160,180,0.32),transparent 70%);top:-120px;right:-100px;}
+.blob-2{width:380px;height:380px;background:radial-gradient(circle,rgba(245,198,212,0.28),transparent 70%);bottom:-80px;left:-80px;}
+.blob-3{width:280px;height:280px;background:radial-gradient(circle,rgba(253,232,239,0.45),transparent 70%);top:45%;left:42%;}
+.petal{position:absolute;pointer-events:none;opacity:0;animation:floatPetal linear infinite;}
+.petal::before{content:'✿';font-size:1rem;color:var(--rose-pale);}
+.petal:nth-child(1){left:8%;animation-duration:13s;animation-delay:0s;}
+.petal:nth-child(2){left:22%;animation-duration:16s;animation-delay:2.5s;}
+.petal:nth-child(3){left:62%;animation-duration:12s;animation-delay:4s;}
+.petal:nth-child(4){left:82%;animation-duration:15s;animation-delay:1.2s;}
+.petal:nth-child(5){left:44%;animation-duration:14s;animation-delay:3.5s;}
+@keyframes floatPetal{0%{opacity:0;transform:translateY(100vh) rotate(0deg);}10%{opacity:0.5;}90%{opacity:0.3;}100%{opacity:0;transform:translateY(-120px) rotate(360deg);}}
+
+.hero-inner{max-width:680px;position:relative;z-index:2;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:0.6rem;background:var(--petal);border:1px solid var(--rose-pale);border-radius:50px;padding:0.5rem 1.2rem;font-size:0.8rem;font-weight:700;letter-spacing:0.06em;text-transform:none;color:var(--rose);margin-bottom:1.6rem;opacity:0;animation:fadeUp 0.8s 0.2s forwards;}
+.hero-headline{font-family:var(--serif);font-size:clamp(2.8rem,7vw,5.4rem);font-weight:700;line-height:1.08;color:var(--text);margin-bottom:0.6rem;opacity:0;animation:fadeUp 0.9s 0.35s forwards;}
+.hero-headline em{font-style:italic;color:var(--rose);}
+.hero-sub{font-family:var(--serif);font-size:clamp(1.1rem,2.5vw,1.5rem);font-weight:700;font-style:italic;color:var(--text);margin-bottom:1.4rem;opacity:0;animation:fadeUp 0.9s 0.45s forwards;}
+.hero-body{font-size:1.02rem;font-weight:400;color:var(--text-soft);line-height:1.85;max-width:540px;margin-bottom:1.8rem;opacity:0;animation:fadeUp 0.9s 0.55s forwards;}
+
+/* BONUS TEASER IN HERO */
+.hero-bonus{display:flex;align-items:center;gap:0.8rem;background:var(--white);border:1.5px solid var(--rose-pale);border-radius:14px;padding:0.9rem 1.2rem;margin-bottom:2rem;max-width:480px;opacity:0;animation:fadeUp 0.9s 0.65s forwards;box-shadow:0 4px 20px rgba(212,112,138,0.1);}
+.hero-bonus-icon{font-size:1.5rem;flex-shrink:0;}
+.hero-bonus-text{font-size:0.85rem;color:var(--text-soft);line-height:1.5;}
+.hero-bonus-text strong{color:var(--rose);font-weight:700;display:block;}
+
+.hero-actions{display:flex;align-items:center;gap:1.6rem;flex-wrap:wrap;opacity:0;animation:fadeUp 0.9s 0.75s forwards;}
+.btn-hero{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:1.05rem;font-weight:700;letter-spacing:0.06em;text-decoration:none;color:var(--white);background:linear-gradient(135deg,var(--rose),var(--mauve));padding:1.2rem 2.6rem;border-radius:50px;box-shadow:0 8px 28px rgba(212,112,138,0.4);transition:transform 0.2s,box-shadow 0.2s;animation:btnGlow 2.5s ease-in-out infinite;}
+.btn-hero:hover{transform:translateY(-3px);box-shadow:0 14px 36px rgba(212,112,138,0.55);}
+.hero-discount{display:flex;flex-direction:column;gap:0.15rem;}
+.hero-original{font-size:0.78rem;color:var(--text-muted);text-decoration:line-through;}
+.hero-price{font-family:var(--serif);font-size:1.5rem;font-weight:700;color:var(--text);}
+.hero-save{font-size:0.72rem;font-weight:700;color:var(--rose);background:var(--petal);padding:0.15rem 0.5rem;border-radius:4px;display:inline-block;}
+
+/* TRUST BAR */
+.trust-bar{background:var(--rose);overflow:hidden;padding:0.85rem 0;}
+.trust-track{display:flex;gap:2.5rem;animation:marquee 24s linear infinite;white-space:nowrap;}
+.trust-item{display:flex;align-items:center;gap:0.7rem;font-size:0.78rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.92);flex-shrink:0;}
+.trust-item::after{content:'♡';color:rgba(255,255,255,0.45);font-size:0.62rem;}
+@keyframes marquee{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+
+/* SECTIONS */
+section{padding:6rem 2.5rem;}
+.section-eyebrow{display:inline-flex;align-items:center;gap:0.5rem;font-size:0.7rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--rose);margin-bottom:0.9rem;}
+.section-eyebrow::before{content:'';display:inline-block;width:18px;height:1.5px;background:var(--rose);border-radius:1px;}
+.section-title{font-family:var(--serif);font-size:clamp(2rem,4.5vw,3.5rem);font-weight:700;line-height:1.1;color:var(--text);margin-bottom:1rem;}
+.section-title em{font-style:italic;color:var(--rose);}
+
+/* DIFFERENT SECTION */
+.different{background:linear-gradient(160deg,var(--blush) 0%,var(--cream) 70%);position:relative;overflow:hidden;}
+.different-inner{max-width:1050px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;}
+.different-quote{font-family:var(--serif);font-size:clamp(1.6rem,3.5vw,2.6rem);font-style:italic;color:var(--rose);line-height:1.3;margin:1.2rem 0;border-left:4px solid var(--rose-pale);padding-left:1.4rem;}
+.different-body{font-size:1rem;color:var(--text-soft);line-height:1.85;margin-top:1rem;}
+.different-right{background:var(--white);border:2px solid var(--blush-deep);border-radius:24px;padding:2.4rem;box-shadow:0 16px 50px rgba(212,112,138,0.1);}
+.diff-tag{font-size:0.72rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--rose);margin-bottom:1.2rem;}
+.diff-list{list-style:none;display:flex;flex-direction:column;gap:0.9rem;}
+.diff-list li{display:flex;align-items:flex-start;gap:0.8rem;font-size:0.96rem;color:var(--text-soft);line-height:1.55;}
+.diff-list li span.icon{font-size:1rem;flex-shrink:0;margin-top:1px;}
+
+/* MADE FOR */
+.made-for{background:linear-gradient(135deg,var(--rose) 0%,var(--mauve) 100%);padding:5rem 2.5rem;}
+.made-for-inner{max-width:700px;margin:0 auto;text-align:center;}
+.made-for h2{font-family:var(--serif);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);line-height:1.15;margin-bottom:2.5rem;}
+.made-for h2 em{font-style:italic;color:rgba(255,255,255,0.75);}
+.made-for-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;text-align:left;}
+.made-card{background:rgba(255,255,255,0.13);border:1px solid rgba(255,255,255,0.2);border-radius:16px;padding:1.3rem 1.5rem;display:flex;align-items:center;gap:0.8rem;backdrop-filter:blur(8px);transition:background 0.2s,transform 0.2s;}
+.made-card:hover{background:rgba(255,255,255,0.2);transform:translateY(-2px);}
+.made-card-heart{color:rgba(255,255,255,0.7);font-size:1.1rem;flex-shrink:0;}
+.made-card p{font-size:0.96rem;color:var(--white);font-weight:600;line-height:1.4;}
+
+
+/* FEATURES */
+.features-inner{max-width:1050px;margin:0 auto;}
+.features-header{margin-bottom:3rem;max-width:600px;}
+.features-header p{font-size:1rem;color:var(--text-soft);line-height:1.8;margin-top:0.8rem;}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:1.3rem;}
+.feat-card{background:var(--white);border:1.5px solid var(--blush-deep);border-radius:20px;padding:2rem;position:relative;overflow:hidden;transition:transform 0.25s,border-color 0.25s,box-shadow 0.25s;}
+.feat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--rose-light),var(--rose-pale));transform:scaleX(0);transform-origin:left;transition:transform 0.35s ease;}
+.feat-card:hover{transform:translateY(-4px);border-color:var(--rose-pale);box-shadow:0 14px 44px rgba(212,112,138,0.13);}
+.feat-card:hover::before{transform:scaleX(1);}
+.feat-emoji{font-size:1.9rem;margin-bottom:0.9rem;display:block;}
+.feat-title{font-family:var(--serif);font-size:1.2rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;}
+.feat-body{font-size:0.9rem;color:var(--text-soft);line-height:1.75;}
+.feat-outcome{display:inline-block;margin-top:0.9rem;font-size:0.74rem;font-weight:700;letter-spacing:0.05em;color:var(--rose);background:var(--petal);padding:0.28rem 0.75rem;border-radius:20px;}
+
+/* HOW IT WORKS */
+.how{background:linear-gradient(180deg,var(--blush) 0%,var(--cream) 100%);}
+.how-inner{max-width:720px;margin:0 auto;}
+.how-inner .section-title{margin-bottom:0.5rem;}
+.how-inner > p{font-size:1rem;color:var(--text-soft);line-height:1.85;margin-bottom:2.5rem;}
+.how-inner > p em{font-style:italic;color:var(--rose);}
+
+/* TESTIMONIALS — PLANNER */
+.testi-inner{max-width:1050px;margin:0 auto;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(275px,1fr));gap:1.3rem;margin-top:2.8rem;}
+.testi-card{background:var(--white);border:1.5px solid var(--blush-deep);border-radius:20px;padding:2rem;transition:transform 0.2s,box-shadow 0.2s;}
+.testi-card:hover{transform:translateY(-3px);box-shadow:0 12px 36px rgba(212,112,138,0.1);}
+.testi-quote-mark{font-family:var(--serif);font-size:3.6rem;line-height:1;color:var(--rose-pale);margin-bottom:0.2rem;}
+.testi-text{font-family:var(--serif);font-size:1.02rem;font-style:italic;line-height:1.72;color:var(--text);margin-bottom:1.1rem;}
+.testi-result{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.76rem;font-weight:700;color:var(--rose);background:var(--petal);padding:0.28rem 0.7rem;border-radius:20px;margin-bottom:0.9rem;}
+.testi-stars{color:var(--rose);font-size:0.78rem;letter-spacing:2px;margin-bottom:0.5rem;}
+.testi-name{font-size:0.78rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--rose);}
+.testi-loc{font-size:0.72rem;color:var(--text-muted);margin-top:0.15rem;}
+
+/* BONUS */
+.bonus{background:linear-gradient(150deg,var(--blush) 0%,var(--petal) 50%,var(--blush-deep) 100%);position:relative;overflow:hidden;}
+.bonus::before{content:'✦';position:absolute;font-size:22rem;color:rgba(212,112,138,0.05);top:-80px;right:-50px;line-height:1;pointer-events:none;}
+.bonus-inner{max-width:1050px;margin:0 auto;}
+.bonus-wrap{display:grid;grid-template-columns:1.15fr 1fr;gap:4rem;align-items:start;margin-top:2.8rem;}
+.bonus-card{background:var(--white);border:2px solid var(--rose-pale);border-radius:24px;padding:2.8rem;box-shadow:0 20px 60px rgba(212,112,138,0.14);position:relative;overflow:hidden;}
+.bonus-card::after{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--rose),var(--rose-light),var(--rose-pale));}
+.bonus-pill{display:inline-flex;align-items:center;gap:0.4rem;background:var(--rose);color:var(--white);font-size:0.7rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;padding:0.38rem 0.9rem;border-radius:50px;margin-bottom:1rem;}
+.bonus-card-title{font-family:var(--serif);font-size:2.1rem;font-weight:700;color:var(--text);line-height:1.15;margin-bottom:0.9rem;}
+.bonus-card-title em{font-style:italic;color:var(--rose);}
+.bonus-card-hook{font-size:1rem;color:var(--text-soft);line-height:1.82;margin-bottom:1.4rem;}
+.bonus-list{list-style:none;display:flex;flex-direction:column;gap:0.6rem;margin-bottom:1.4rem;}
+.bonus-list li{display:flex;align-items:flex-start;gap:0.65rem;font-size:0.9rem;color:var(--text-soft);line-height:1.5;}
+.bonus-list li::before{content:'♡';color:var(--rose);font-size:0.82rem;flex-shrink:0;margin-top:2px;}
+.bonus-value{display:flex;align-items:center;gap:0.9rem;flex-wrap:wrap;padding-top:1.2rem;border-top:1px solid var(--blush-deep);}
+.bonus-original{font-size:0.88rem;color:var(--text-muted);text-decoration:line-through;}
+.bonus-free{font-family:var(--serif);font-size:1.35rem;font-weight:700;color:var(--rose);}
+
+/* BONUS TESTIMONIALS */
+.bonus-right{display:flex;flex-direction:column;gap:1.2rem;}
+.bonus-right-intro{font-family:var(--serif);font-size:1.9rem;font-weight:700;line-height:1.2;color:var(--text);}
+.bonus-right-intro em{font-style:italic;color:var(--rose);}
+.bonus-right-sub{font-size:0.96rem;color:var(--text-soft);line-height:1.8;margin-bottom:0.5rem;}
+.bonus-testi{background:var(--white);border:1.5px solid var(--blush-deep);border-radius:16px;padding:1.4rem 1.6rem;}
+.bonus-testi-text{font-family:var(--serif);font-size:0.95rem;font-style:italic;color:var(--text);line-height:1.68;margin-bottom:0.7rem;}
+.bonus-testi-bottom{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:0.5rem;}
+.bonus-testi-name{font-size:0.75rem;font-weight:700;color:var(--rose);letter-spacing:0.07em;text-transform:uppercase;}
+.bonus-testi-stars{color:var(--rose);font-size:0.72rem;letter-spacing:1px;}
+
+/* PRICING */
+.pricing{background:var(--cream);text-align:center;position:relative;overflow:hidden;}
+.pricing::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 50% 0%,rgba(212,112,138,0.07),transparent 70%);pointer-events:none;}
+.pricing-inner{max-width:560px;margin:0 auto;position:relative;}
+.pricing-card{background:var(--white);border:2px solid var(--rose-pale);border-radius:28px;padding:3.5rem 3rem;margin-top:2.5rem;box-shadow:0 24px 80px rgba(212,112,138,0.12);position:relative;overflow:hidden;}
+.pricing-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;background:linear-gradient(90deg,var(--rose),var(--rose-light),var(--rose-pale));}
+.pricing-badge{display:inline-flex;align-items:center;gap:0.4rem;background:linear-gradient(135deg,var(--rose),var(--mauve));color:var(--white);font-size:0.72rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:0.4rem 1rem;border-radius:50px;margin-bottom:1.4rem;}
+.pricing-was{font-size:1rem;color:var(--text-muted);text-decoration:line-through;margin-bottom:0.2rem;}
+.pricing-amount{font-family:var(--serif);font-size:4.2rem;font-weight:700;color:var(--text);line-height:1;}
+.pricing-save{display:inline-block;background:var(--rose);color:var(--white);font-size:0.76rem;font-weight:700;letter-spacing:0.06em;padding:0.3rem 0.8rem;border-radius:20px;margin:0.5rem 0 0.3rem;}
+.pricing-note{font-size:0.76rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-muted);margin-bottom:2rem;}
+.pricing-includes{list-style:none;text-align:left;display:flex;flex-direction:column;gap:0.75rem;margin-bottom:1.6rem;background:var(--blush);border-radius:16px;padding:1.5rem;}
+.pricing-includes li{display:flex;align-items:center;gap:0.65rem;font-size:0.91rem;color:var(--text-soft);}
+.pricing-includes li::before{content:'✓';font-size:0.75rem;font-weight:700;color:var(--white);background:var(--rose);width:19px;height:19px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.bonus-line{background:linear-gradient(135deg,var(--rose),var(--mauve));border-radius:12px;padding:1rem 1.3rem;display:flex;align-items:center;gap:0.8rem;margin-bottom:1.8rem;text-align:left;}
+.bonus-line-icon{font-size:1.3rem;}
+.bonus-line-text{font-size:0.86rem;color:var(--white);line-height:1.5;}
+.bonus-line-text strong{font-weight:700;display:block;}
+.btn-buy{display:block;width:100%;font-family:var(--sans);font-size:1.1rem;font-weight:700;letter-spacing:0.06em;text-decoration:none;color:var(--white);background:linear-gradient(135deg,var(--rose),var(--mauve));padding:1.4rem 2rem;border-radius:50px;box-shadow:0 8px 30px rgba(212,112,138,0.45);transition:transform 0.2s,box-shadow 0.2s;text-align:center;animation:btnGlow 2.5s ease-in-out infinite;}
+.btn-buy:hover{transform:translateY(-3px);box-shadow:0 14px 42px rgba(212,112,138,0.6);}
+@keyframes pulse{0%,100%{box-shadow:0 8px 30px rgba(212,112,138,0.45);}50%{box-shadow:0 8px 40px rgba(212,112,138,0.7),0 0 0 8px rgba(212,112,138,0.1);}}
+.pricing-guarantee{margin-top:1rem;font-size:0.76rem;color:var(--text-muted);display:flex;align-items:center;justify-content:center;gap:0.4rem;}
+
+/* FAQ */
+.faq{background:var(--blush);}
+.faq-inner{max-width:660px;margin:0 auto;}
+.faq-inner .section-title{margin-bottom:2.2rem;}
+.faq-item{border-bottom:1px solid var(--rose-pale);padding:1.3rem 0;}
+.faq-q{font-family:var(--serif);font-size:1.04rem;font-weight:700;color:var(--text);margin-bottom:0.5rem;display:flex;align-items:center;gap:0.6rem;}
+.faq-q::before{content:'♡';color:var(--rose);font-size:0.78rem;flex-shrink:0;}
+.faq-a{font-size:0.92rem;color:var(--text-soft);line-height:1.82;padding-left:1.4rem;}
+
+/* FINAL CTA */
+.final-cta{background:linear-gradient(135deg,var(--rose) 0%,var(--mauve) 100%);text-align:center;padding:6rem 2.5rem;position:relative;overflow:hidden;}
+.final-cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 50% 50%,rgba(255,255,255,0.06),transparent);pointer-events:none;}
+.final-cta-inner{max-width:580px;margin:0 auto;position:relative;}
+.final-cta h2{font-family:var(--serif);font-size:clamp(2.2rem,5vw,3.8rem);font-weight:700;color:var(--white);line-height:1.12;margin-bottom:1rem;}
+.final-cta h2 em{font-style:italic;color:rgba(255,255,255,0.78);}
+.final-cta p{font-size:1rem;color:rgba(255,255,255,0.82);line-height:1.82;margin-bottom:2.5rem;}
+.btn-final{display:inline-block;font-family:var(--sans);font-size:1rem;font-weight:700;letter-spacing:0.06em;text-decoration:none;color:var(--rose);background:var(--white);padding:1.2rem 3rem;border-radius:50px;box-shadow:0 8px 30px rgba(0,0,0,0.18);transition:transform 0.2s,box-shadow 0.2s;animation:finalBtnGlow 2.5s ease-in-out infinite;}
+.btn-final:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(0,0,0,0.25);}
+@keyframes finalBtnGlow{0%,100%{box-shadow:0 8px 30px rgba(255,255,255,0.2);}50%{box-shadow:0 8px 40px rgba(255,255,255,0.55),0 0 0 6px rgba(255,255,255,0.1);}}
+
+footer{background:var(--text);padding:2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;}
+.footer-logo{font-family:var(--serif);font-size:1rem;color:var(--rose-light);}
+.footer-copy{font-size:0.74rem;color:rgba(255,255,255,0.32);}
+
+@keyframes btnGlow{0%,100%{box-shadow:0 8px 28px rgba(212,112,138,0.4);}50%{box-shadow:0 8px 40px rgba(212,112,138,0.75),0 0 0 6px rgba(212,112,138,0.15);}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(26px);transition:opacity 0.8s ease,transform 0.8s ease;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+.reveal-delay-1{transition-delay:0.1s;}
+.reveal-delay-2{transition-delay:0.2s;}
+.reveal-delay-3{transition-delay:0.3s;}
+
+@media(max-width:768px){
+  .different-inner,.bonus-wrap{grid-template-columns:1fr;gap:2.5rem;}
+  .made-for-grid{grid-template-columns:1fr;}
+  nav{padding:1rem 1.2rem;}
+  section{padding:4rem 1.4rem;}
+  .hero{padding:6rem 1.4rem 3.5rem;}
+  footer{flex-direction:column;text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+<div class="petal"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Soft Life System ✦</div>
+  <a href="https://nestuge.com/herbloompl1" class="nav-btn">Get Access — $10</a>
+</nav>
+
+<!-- FLASH SALE BANNER -->
+<div class="flash-banner">
+  <span class="flash-icon">🔥</span>
+  <span class="flash-text">Flash Sale — 75% off ends in</span>
+  <div class="flash-timer">
+    <div class="timer-block"><span id="t-hours">47</span><label>hrs</label></div>
+    <div class="timer-sep">:</div>
+    <div class="timer-block"><span id="t-mins">59</span><label>min</label></div>
+    <div class="timer-sep">:</div>
+    <div class="timer-block"><span id="t-secs">59</span><label>sec</label></div>
+  </div>
+  <a href="https://nestuge.com/herbloompl1" class="flash-cta">Grab it now →</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="hero-inner">
+    <div class="hero-eyebrow">✦ The Digital Planner for High-Standard Women</div>
+    <h1 class="hero-headline">
+      Plan like a <em>Queen.</em><br>
+      Live like it's <em>soft.</em>
+    </h1>
+    <p class="hero-sub">Not just a planner. A whole lifestyle upgrade.</p>
+    <p class="hero-body">
+      You're too intentional for chaos and too ambitious for a basic notebook.
+      The Soft Life System is the digital planner that makes structure feel beautiful — 
+      so you finally feel in control of your time, your habits, your money, and your life.
+    </p>
+    <div class="hero-bonus">
+      <div class="hero-bonus-icon">🌸</div>
+      <div class="hero-bonus-text">
+        <strong>FREE BONUS INCLUDED: Luna Period Tracker — Worth $20</strong>
+        Plus the planner itself is worth $20. Total value $40 — yours for $10.
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a href="https://nestuge.com/herbloompl1" class="btn-hero">✦ Yes, I Want This</a>
+      <div class="hero-discount">
+        <span class="hero-original">Total value: $40</span>
+        <span class="hero-price">75% OFF 🎉</span>
+        <span class="hero-save">Limited time only</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST BAR -->
+<div class="trust-bar">
+  <div class="trust-track">
+    <div class="trust-item">Works Offline</div>
+    <div class="trust-item">5 Beautiful Themes</div>
+    <div class="trust-item">Finance Tracker</div>
+    <div class="trust-item">Habit Tracker</div>
+    <div class="trust-item">Personalised to Your Name</div>
+    <div class="trust-item">Gamification & Rewards</div>
+    <div class="trust-item">One-Time Payment</div>
+    <div class="trust-item">Lifetime Access</div>
+    <div class="trust-item">Works Offline</div>
+    <div class="trust-item">5 Beautiful Themes</div>
+    <div class="trust-item">Finance Tracker</div>
+    <div class="trust-item">Habit Tracker</div>
+    <div class="trust-item">Personalised to Your Name</div>
+    <div class="trust-item">Gamification & Rewards</div>
+    <div class="trust-item">One-Time Payment</div>
+    <div class="trust-item">Lifetime Access</div>
+  </div>
+</div>
+
+<!-- WHY IT'S DIFFERENT -->
+<section class="different">
+  <div class="different-inner">
+    <div class="reveal">
+      <div class="section-eyebrow">This is different</div>
+      <h2 class="section-title">This isn't a planner.<br>It's a <em>lifestyle system.</em></h2>
+      <div class="different-quote">"Structure becomes automatic."</div>
+      <p class="different-body">
+        This isn't a forgotten PDF planner. It's not a complicated template you never finish setting up. 
+        It's an installable web app that lives on your home screen, works offline, and becomes part of your daily routine — 
+        like brushing your teeth, but make it cute. The women who use it don't feel productive. They feel <em style="font-style:italic;color:var(--rose);">transformed.</em>
+      </p>
+    </div>
+    <div class="different-right reveal reveal-delay-1">
+      <div class="diff-tag">✦ What makes it special</div>
+      <ul class="diff-list">
+        <li><span class="icon">📵</span><span><strong>Works offline</strong> — no internet needed. Plan on the go, anytime, anywhere.</span></li>
+        <li><span class="icon">🎨</span><span><strong>5 beautiful colour themes</strong> — switch based on your mood, your season, your energy.</span></li>
+        <li><span class="icon">🏆</span><span><strong>Milestones & celebrations</strong> — because you deserve to be cheered on every single step.</span></li>
+        <li><span class="icon">✨</span><span><strong>Personalised to your name</strong> — it greets you like it knows you, because it does.</span></li>
+        <li><span class="icon">📊</span><span><strong>Weekly & monthly insights</strong> — see your patterns, your progress, your wins over time.</span></li>
+        <li><span class="icon">📱</span><span><strong>Installs on your phone like a real app</strong> — no App Store, no downloads, no storage drama.</span></li>
+        <li><span class="icon">♾️</span><span><strong>One-time purchase, lifetime access</strong> — pay once and it's yours. Forever.</span></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- MADE FOR WOMEN WHO WANT -->
+<section class="made-for">
+  <div class="made-for-inner">
+    <h2 class="reveal">Made for women who want <em>all of it.</em></h2>
+    <div class="made-for-grid">
+      <div class="made-card reveal">
+        <div class="made-card-heart">♡</div>
+        <p>Consistency without burnout</p>
+      </div>
+      <div class="made-card reveal reveal-delay-1">
+        <div class="made-card-heart">♡</div>
+        <p>Discipline without hustle culture</p>
+      </div>
+      <div class="made-card reveal reveal-delay-2">
+        <div class="made-card-heart">♡</div>
+        <p>Clarity without overthinking</p>
+      </div>
+      <div class="made-card reveal reveal-delay-3">
+        <div class="made-card-heart">♡</div>
+        <p>Control over their habits and routine</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section>
+  <div class="features-inner">
+    <div class="features-header reveal">
+      <div class="section-eyebrow">Everything inside</div>
+      <h2 class="section-title">Five tools.<br><em>One powerful system.</em></h2>
+      <p>Every feature was built around one question: what does a high-standard woman actually need to feel in control of her life?</p>
+    </div>
+    <div class="features-grid">
+      <div class="feat-card reveal">
+        <span class="feat-emoji">📅</span>
+        <div class="feat-title">Daily & Weekly Planning</div>
+        <p class="feat-body">Every day has a structure. Every week has a direction. No more waking up overwhelmed — you already know exactly what you're doing and why it matters.</p>
+        <span class="feat-outcome">✦ You end every day feeling accomplished</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <span class="feat-emoji">💰</span>
+        <div class="feat-title">Finance Tracker</div>
+        <p class="feat-body">High-standard women always know where their money is going. Track income, expenses, and savings goals so your financial life finally matches your ambitions.</p>
+        <span class="feat-outcome">✦ You stop wondering where your money went</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-2">
+        <span class="feat-emoji">🎯</span>
+        <div class="feat-title">Habit Tracker</div>
+        <p class="feat-body">Your goals are built in the daily habits most people skip. The streaks, the structure, and the accountability are already built in — all you have to do is show up.</p>
+        <span class="feat-outcome">✦ You become the woman you planned to be</span>
+      </div>
+      <div class="feat-card reveal">
+        <span class="feat-emoji">🎨</span>
+        <div class="feat-title">5 Custom Themes</div>
+        <p class="feat-body">Your planner should be as beautiful as your vision. Five stunning colour themes that actually make you want to open the app every single morning.</p>
+        <span class="feat-outcome">✦ You actually use it — because you love it</span>
+      </div>
+      <div class="feat-card reveal reveal-delay-1">
+        <span class="feat-emoji">🏆</span>
+        <div class="feat-title">Milestones & Rewards</div>
+        <p class="feat-body">Streaks, celebrations, and reward moments built into the system. Because showing up for yourself every day is a big deal — and you deserve to feel that.</p>
+        <span class="feat-outcome">✦ Consistency finally feels like a joy</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how">
+  <div class="how-inner">
+    <div class="section-eyebrow reveal">Simple from the start</div>
+    <h2 class="section-title reveal">From purchase to <em>planning in 60 seconds.</em></h2>
+    <p class="reveal">After purchase, you receive your private app link and passcode in a PDF. Open it, copy the link, add it to your home screen, and use it like a real app — <em>no app store needed.</em> One-time purchase. Lifetime access. No subscriptions.</p>
+    <div style="display:flex;flex-direction:column;gap:1.4rem;margin-top:1rem;">
+      <div style="display:flex;gap:1.4rem;align-items:flex-start;" class="reveal">
+        <div style="width:54px;height:54px;background:linear-gradient(135deg,var(--rose),var(--mauve));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.3rem;font-weight:700;color:white;flex-shrink:0;box-shadow:0 6px 18px rgba(212,112,138,0.35);">1</div>
+        <div><strong style="font-family:var(--serif);font-size:1.15rem;color:var(--text);display:block;margin-bottom:0.3rem;">Complete your purchase</strong><span style="font-size:0.95rem;color:var(--text-soft);line-height:1.75;">One payment of $10 — no subscriptions, no recurring fees. You pay once and it's yours forever.</span></div>
+      </div>
+      <div style="display:flex;gap:1.4rem;align-items:flex-start;" class="reveal reveal-delay-1">
+        <div style="width:54px;height:54px;background:linear-gradient(135deg,var(--rose),var(--mauve));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.3rem;font-weight:700;color:white;flex-shrink:0;box-shadow:0 6px 18px rgba(212,112,138,0.35);">2</div>
+        <div><strong style="font-family:var(--serif);font-size:1.15rem;color:var(--text);display:block;margin-bottom:0.3rem;">Receive your access PDF instantly</strong><span style="font-size:0.95rem;color:var(--text-soft);line-height:1.75;">Your private app link and unique passcode arrive in your inbox right after purchase.</span></div>
+      </div>
+      <div style="display:flex;gap:1.4rem;align-items:flex-start;" class="reveal reveal-delay-2">
+        <div style="width:54px;height:54px;background:linear-gradient(135deg,var(--rose),var(--mauve));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.3rem;font-weight:700;color:white;flex-shrink:0;box-shadow:0 6px 18px rgba(212,112,138,0.35);">3</div>
+        <div><strong style="font-family:var(--serif);font-size:1.15rem;color:var(--text);display:block;margin-bottom:0.3rem;">Add it to your home screen</strong><span style="font-size:0.95rem;color:var(--text-soft);line-height:1.75;">Copy the link, add to your home screen, and it lives there like a real app — beautiful, offline-ready, and always yours.</span></div>
+      </div>
+      <div style="display:flex;gap:1.4rem;align-items:flex-start;" class="reveal reveal-delay-3">
+        <div style="width:54px;height:54px;background:linear-gradient(135deg,var(--rose),var(--mauve));border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:1.3rem;font-weight:700;color:white;flex-shrink:0;box-shadow:0 6px 18px rgba(212,112,138,0.35);">4</div>
+        <div><strong style="font-family:var(--serif);font-size:1.15rem;color:var(--text);display:block;margin-bottom:0.3rem;">Personalise & start living soft</strong><span style="font-size:0.95rem;color:var(--text-soft);line-height:1.75;">Choose your theme, enter your name, and begin building the life you've been planning in your head. She's right there.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLANNER TESTIMONIALS -->
+<section>
+  <div class="testi-inner">
+    <div class="section-eyebrow reveal">Real women. Real results.</div>
+    <h2 class="section-title reveal">They planned the soft life.<br>Then they <em>built it.</em></h2>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">Before this, I had 4 different apps and still felt disorganised. This planner replaced everything. I actually know what I'm doing every day now — and I feel so much calmer.</p>
+        <div class="testi-result">✦ Went from scattered to structured</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-name">Amara O.</div>
+        <div class="testi-loc">Lagos, Nigeria</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-1">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">I didn't realise how much mental clutter I was carrying until this planner cleared it. Everything has a place now — my tasks, my goals, my week. I feel like a different woman. Calm, clear, and actually in control of my life.</p>
+        <div class="testi-result">✦ From overwhelmed to completely in control</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-name">Zainab K.</div>
+        <div class="testi-loc">Accra, Ghana</div>
+      </div>
+      <div class="testi-card reveal reveal-delay-2">
+        <div class="testi-quote-mark">"</div>
+        <p class="testi-text">I've never stuck to a planner for more than 2 weeks. I've had this one for 3 months and I open it every single morning. The themes, the streaks, the way it celebrates you — it makes you want to keep going.</p>
+        <div class="testi-result">✦ 3 months consistent — a personal record</div>
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-name">Naledi M.</div>
+        <div class="testi-loc">Johannesburg, South Africa</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BONUS SECTION -->
+<section class="bonus">
+  <div class="bonus-inner">
+    <div class="section-eyebrow reveal">And there's a gift waiting for you ✦</div>
+    <h2 class="section-title reveal">You also get this.<br><em>Completely free.</em></h2>
+    <div class="bonus-wrap">
+      <div class="bonus-card reveal">
+        <div class="bonus-pill">🌸 Free Bonus — Included</div>
+        <div class="bonus-card-title">Luna<br><em>Period Tracker</em></div>
+        <p class="bonus-card-hook">
+          Your cycle is one of the most powerful things about you — and most women are flying blind. 
+          Her Bloom is a beautifully designed period & cycle tracker that helps you understand your body, 
+          predict your patterns, and plan your life around your energy instead of against it.
+        </p>
+        <ul class="bonus-list">
+          <li>Track your cycle, flow, mood & symptoms every day</li>
+          <li>See your patterns clearly so nothing ever catches you off guard</li>
+          <li>Understand your energy across each phase of your cycle</li>
+          <li>Plan your most important work for your most powerful days</li>
+          <li>Beautiful, feminine design that makes self-care feel luxurious</li>
+          <li>Works seamlessly alongside your Soft Life System planner</li>
+        </ul>
+        <div class="bonus-value">
+          <span class="bonus-original">Sold separately: $20</span>
+          <span class="bonus-free">Yours FREE ✦</span>
+        </div>
+      </div>
+      <div class="bonus-right">
+        <div class="bonus-right-intro reveal reveal-delay-1">
+          A woman who knows <em>her body</em> is unstoppable.
+        </div>
+        <p class="bonus-right-sub reveal reveal-delay-1">
+          When you understand your cycle, you stop fighting yourself. You plan smarter, rest without guilt, and show up powerfully — because you know exactly when you're at your best.
+          <br><br>
+          <strong style="color:var(--text);">Luna comes with your Soft Life System the moment you purchase.</strong> No extra steps, no extra cost. Just two powerful tools working together.
+        <a href="https://nestuge.com/herbloompl1" class="btn-hero" style="margin-top:1.4rem;display:inline-flex;">✦ Get Both Now — $10</a>
+        </p>
+        <!-- Bonus testimonials -->
+        <div class="bonus-testi reveal reveal-delay-2">
+          <p class="bonus-testi-text">"I never understood why some weeks I had so much energy and other weeks I wanted to disappear. Luna helped me see my cycle patterns for the first time. I literally plan my launches and content days around my phases now."</p>
+          <div class="bonus-testi-bottom">
+            <div class="bonus-testi-name">Temi A. · Lagos</div>
+            <div class="bonus-testi-stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="bonus-testi reveal reveal-delay-3">
+          <p class="bonus-testi-text">"I thought period tracking was just for getting pregnant. Her Bloom completely changed my perspective. I'm less hard on myself now because I understand what my body is doing. It's honestly emotional how much clarity this gave me."</p>
+          <div class="bonus-testi-bottom">
+            <div class="bonus-testi-name">Simi O. · Abuja</div>
+            <div class="bonus-testi-stars">★★★★★</div>
+          </div>
+        </div>
+        <div class="bonus-testi reveal">
+          <p class="bonus-testi-text">"Getting this free with the planner felt almost unfair — it's that good. I use both every single day. The planner keeps my life organised, Luna keeps me in tune with myself. Together they're everything."</p>
+          <div class="bonus-testi-bottom">
+            <div class="bonus-testi-name">Adaeze N. · Enugu</div>
+            <div class="bonus-testi-stars">★★★★★</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing">
+  <div class="pricing-inner">
+    <div class="section-eyebrow reveal" style="justify-content:center;display:flex;">Your investment</div>
+    <h2 class="section-title reveal">Everything.<br><em>One price. Forever.</em></h2>
+    <div class="pricing-card reveal">
+      <div class="pricing-badge">✦ Flash Sale — 75% Off · Ends Soon</div>
+      <div class="pricing-urgency">
+        <span class="pu-label">⏰ Price goes up in</span>
+        <div class="pu-timer">
+          <div class="pu-block"><span id="p-hours">47</span><label>hrs</label></div>
+          <div class="pu-sep">:</div>
+          <div class="pu-block"><span id="p-mins">59</span><label>min</label></div>
+          <div class="pu-sep">:</div>
+          <div class="pu-block"><span id="p-secs">59</span><label>sec</label></div>
+        </div>
+      </div>
+      <div class="pricing-was">Total value: $40</div>
+      <div class="pricing-amount">75% OFF</div>
+      <div class="pricing-save">Get both today for just $10 🎉</div>
+      <div class="pricing-note">One-time · No subscriptions · Lifetime access</div>
+      <ul class="pricing-includes">
+        <li><strong>Soft Life System Digital Planner</strong> — worth $20</li>
+        <li>Daily & Weekly Planning Pages</li>
+        <li>Finance Tracker</li>
+        <li>Habit Tracker with Streaks & Milestones</li>
+        <li>5 Custom Themes & Personalisation</li>
+        <li>Weekly & Monthly Insights</li>
+        <li>Works Offline — No Internet Needed</li>
+        <li>Installs on Your Phone Like a Real App</li>
+      </ul>
+      <div class="bonus-line">
+        <div class="bonus-line-icon">🌸</div>
+        <div class="bonus-line-text">
+          <strong>FREE BONUS: Luna Period Tracker — Worth $20</strong>
+          Included free. Total value $40 — you pay just $10.
+        </div>
+      </div>
+      <a href="https://nestuge.com/herbloompl1" class="btn-buy">✦ Yes! I'm Ready — Get Instant Access</a>
+      <p class="pricing-guarantee">🔒 Secure checkout · Instant digital delivery</p>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="faq">
+  <div class="faq-inner">
+    <div class="section-eyebrow reveal">Got questions?</div>
+    <h2 class="section-title reveal">We've got <em>answers.</em></h2>
+    <div class="faq-item reveal">
+      <div class="faq-q">What exactly is a PWA and how does it work?</div>
+      <p class="faq-a">PWA stands for Progressive Web App. It lives in your browser but works exactly like a real installed app — you save it to your home screen and open it like any other app on your phone. No App Store, no downloads, no storage issues. It even works offline.</p>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How do I get access after purchasing?</div>
+      <p class="faq-a">Right after purchase, a PDF is delivered to your inbox containing your private app link and unique passcode. Open the link, enter your passcode, add it to your home screen, and you're in — the whole process takes under 60 seconds.</p>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Is this really a one-time payment?</div>
+      <p class="faq-a">Yes — absolutely. You pay $10 once and the Soft Life System is yours forever. No subscriptions, no monthly fees, no surprises.</p>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">Will it work on my phone?</div>
+      <p class="faq-a">Yes — it works on all smartphones, tablets, and browsers, whether you're on Android or iPhone. It's designed to feel seamless and beautiful on your screen.</p>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">How do I receive the Luna bonus?</div>
+      <p class="faq-a">Luna Period Tracker is delivered alongside your Soft Life System access in the same PDF. Everything arrives in one email — your planner link, your passcode, and your bonus.</p>
+    </div>
+    <div class="faq-item reveal">
+      <div class="faq-q">What if I'm not tech-savvy?</div>
+      <p class="faq-a">The setup guide makes it incredibly simple — if you can follow 3 steps, you can set this up. And if you ever need help, support is available.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-inner">
+    <h2 class="reveal">She doesn't wait for<br>the <em>perfect moment.</em><br>She plans it.</h2>
+    <p class="reveal">
+      The woman you want to be — organised, intentional, in tune with her body, financially aware, and living softly — she's not waiting for motivation. She has a system. Today, you can have it too.
+    </p>
+    <a href="https://nestuge.com/herbloompl1" class="btn-final reveal">✦ Get the Soft Life System — $10</a>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Soft Life System ✦</div>
+  <div class="footer-copy">© 2026 FeyiTheUnicorn · All rights reserved</div>
+</footer>
+
+<!-- STICKY BOTTOM BAR -->
+<div class="sticky-bar">
+  <div class="sticky-bar-inner">
+    <div class="sticky-bar-left">
+      <a href="https://wa.me/2348131279888?text=Hi!%20I%20have%20a%20question%20about%20the%20Soft%20Life%20System%20%F0%9F%8C%B8" target="_blank" class="sticky-social sticky-wa" aria-label="Chat on WhatsApp">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.554 4.118 1.524 5.855L.057 23.882a.5.5 0 0 0 .612.612l6.058-1.464A11.938 11.938 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.907 0-3.695-.504-5.24-1.385l-.373-.216-3.865.934.951-3.77-.236-.386A9.944 9.944 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        <span>Have a question? Chat with me</span>
+      </a>
+      <a href="https://instagram.com/createdbyfey" target="_blank" class="sticky-social sticky-ig" aria-label="Instagram">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        <span>@createdbyfey</span>
+      </a>
+    </div>
+    <a href="https://nestuge.com/herbloompl1" class="sticky-cta">✦ Get Instant Access — $10</a>
+  </div>
+</div>
+
+<style>
+.sticky-bar{position:fixed;bottom:0;left:0;right:0;z-index:500;background:var(--white);border-top:1.5px solid var(--rose-pale);box-shadow:0 -6px 30px rgba(212,112,138,0.12);padding:0.85rem 2rem;}
+.sticky-bar-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:1rem;}
+.sticky-bar-left{display:flex;align-items:center;gap:0.8rem;flex-wrap:wrap;}
+.sticky-social{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.78rem;font-weight:700;text-decoration:none;padding:0.5rem 0.9rem;border-radius:50px;transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;}
+.sticky-social:hover{transform:translateY(-2px);}
+.sticky-wa{background:#25D366;color:#fff;box-shadow:0 4px 14px rgba(37,211,102,0.3);}
+.sticky-wa:hover{box-shadow:0 6px 20px rgba(37,211,102,0.45);}
+.sticky-ig{background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);color:#fff;box-shadow:0 4px 14px rgba(220,39,67,0.25);}
+.sticky-ig:hover{box-shadow:0 6px 20px rgba(220,39,67,0.4);}
+.sticky-cta{display:inline-flex;align-items:center;gap:0.5rem;font-family:var(--sans);font-size:0.95rem;font-weight:700;letter-spacing:0.06em;text-decoration:none;color:var(--white);background:linear-gradient(135deg,var(--rose),var(--mauve));padding:1rem 2rem;border-radius:50px;box-shadow:0 6px 22px rgba(212,112,138,0.4);transition:transform 0.2s,box-shadow 0.2s;white-space:nowrap;animation:btnGlow 2.5s ease-in-out infinite;}
+.sticky-cta:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(212,112,138,0.55);}
+@media(max-width:600px){
+  .sticky-bar{padding:0.8rem 1rem;}
+  .sticky-bar-inner{flex-direction:column;gap:0.7rem;}
+  .sticky-bar-left{width:100%;justify-content:center;gap:0.6rem;}
+  .sticky-social{flex:1;justify-content:center;padding:0.65rem 0.5rem;font-size:0.78rem;}
+  .sticky-ig span{display:none;}
+  .sticky-cta{width:100%;justify-content:center;font-size:1rem;padding:1rem;}
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function(){
+
+  // Evergreen countdown — 24hrs from first visit, stored in localStorage so it persists across tabs
+  (function(){
+    var key = 'sls_deadline';
+    var deadline = parseInt(localStorage.getItem(key));
+    if(!deadline || isNaN(deadline)){
+      deadline = Date.now() + 24 * 60 * 60 * 1000;
+      localStorage.setItem(key, deadline);
+    }
+    function update(){
+      var diff = Math.max(0, deadline - Date.now());
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      var pad = function(n){ return String(n).padStart(2,'0'); };
+      ['t-hours','p-hours'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=pad(h); });
+      ['t-mins','p-mins'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=pad(m); });
+      ['t-secs','p-secs'].forEach(function(id){ var el=document.getElementById(id); if(el) el.textContent=pad(s); });
+      // When it hits zero, reset fresh 24hrs so urgency never dies
+      if(diff === 0){
+        deadline = Date.now() + 24 * 60 * 60 * 1000;
+        localStorage.setItem(key, deadline);
+      }
+    }
+    update();
+    setInterval(update, 1000);
+  })();
+
+  // Scroll reveal
+  const reveals = document.querySelectorAll('.reveal');
+  if('IntersectionObserver' in window){
+    const obs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e, i){
+        if(e.isIntersecting){
+          setTimeout(function(){ e.target.classList.add('visible'); }, i * 65);
+          obs.unobserve(e.target);
+        }
+      });
+    },{threshold:0.08});
+    reveals.forEach(function(el){ obs.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('visible'); });
+  }
+
+});
+</script>
+</body>
+</html>
